@@ -1,6 +1,9 @@
 const pageHeader = document.querySelector('.Heading.c__page-header');
 const onRegistrationPage = pageHeader && pageHeader.innerText === "Patient Registration";
 
+const defaults = {
+  reorder: 'prepend',
+}
 const fields = {
   // Identity
   LASTNAME: { header: true },
@@ -25,13 +28,13 @@ const fields = {
   WORKPHONE: { rarelyUsed: true },
 
   // Demographic
-  SEX: { header: true },
+  SEXUALORIENTATION: { header: true },
+  SEX: {},
   GENDERIDENTITY: {},
-  SEXUALORIENTATION: {},
+
   MARITALSTATUSID: {},
-  
-  HOMELESS: {},
   SCHOOLBASED: {},
+  HOMELESS: {},
   VETERANSTATUS: {},
   PUBLICHOUSING: {},
   REFERRALSOURCEID: {},
@@ -86,19 +89,24 @@ const fields = {
    */
 
   // Other side
-  CLIENTRECORDNUMBER22: { append: true, header: true },
+  CLIENTRECORDNUMBER22: { reorder: 'append', header: true },
 
   // Administrative
-  CARESUMMARYDELIVERYPREFERENCE: { append: true },
-  CURRENTDEPARTMENTID: { append: true },
-  REGISTRATIONDEPARTMENTID: { append: true },
-  PRIMARYPROVIDERID:  { default: 154, header: true, append: true },
+  CARESUMMARYDELIVERYPREFERENCE: { reorder: 'append' },
+  CURRENTDEPARTMENTID: { reorder: 'append' },
+  REGISTRATIONDEPARTMENTID: { reorder: 'append' },
+  PRIMARYPROVIDERID:  { header: true, reorder: 'append' },
 
   // More demographics
-  HOMEBOUNDYN: { rarelyUsed: true, append: true },
-  AGRIWORKER: { rarelyUsed: true, append: true },
-  DECEASEDDATE: { rarelyUsed: true, append: true },
-  IDOVERRIDE: { rarelyUsed: true, append: true },  
+  HOMEBOUNDYN: { rarelyUsed: true, reorder: 'append' },
+  AGRIWORKER: { rarelyUsed: true, reorder: 'append' },
+  DECEASEDDATE: { rarelyUsed: true, reorder: 'append' },
+  IDOVERRIDE: { rarelyUsed: true, reorder: 'append' },
+
+  PRIVACYNOTICEGIVENFLAG: { reorder: false, checked: true },
+  PATIENTSIGNATUREONFILEFLAG: { reorder: false, checked: true },
+  INSUREDSIGNATUREONFILEFLAG: { reorder: false, checked: true },
+  CONSENTTOCALLFLAG: { reorder: false, checked: true },
 }
 
 function initRegistrationPage() {
@@ -115,12 +123,13 @@ function initRegistrationPage() {
 };
 
 function decorateRow(parent, row, fieldEl) {
-  const fieldSpec = fields[fieldEl.getAttribute('name')];
+  const fieldSpec = {
+    ...defaults,
+    ...fields[fieldEl.getAttribute('name')]
+  };
 
-  if (fieldSpec.append) {
-    parent.append(row);
-  } else {
-    parent.prepend(row);
+  if (fieldSpec.reorder) {
+    parent[fieldSpec.reorder](row);
   }
 
   if (fieldSpec.rarelyUsed) {
@@ -133,6 +142,11 @@ function decorateRow(parent, row, fieldEl) {
 
   if (fieldSpec.default) {
     fieldEl.value = fieldSpec.default;
+  }
+
+  if (fieldSpec.checked !== undefined) {
+    console.log('checking', fieldEl)
+    fieldEl.checked = fieldSpec.checked;
   }
 }
 
