@@ -145,7 +145,6 @@ function decorateRow(parent, row, fieldEl) {
   }
 
   if (fieldSpec.checked !== undefined) {
-    console.log('checking', fieldEl)
     fieldEl.checked = fieldSpec.checked;
   }
 }
