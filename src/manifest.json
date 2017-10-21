@@ -6,20 +6,19 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "Click here!"
+    "default_icon": "popup/icon.png",
+    "default_popup": "popup/index.html",
+    "default_title": "BFC Athena Extension"
   },
   "permissions": [
-    "activeTab",
-    "storage"
+    "activeTab"
   ],
   "content_scripts": [
     {
       "all_frames": true,
       "matches": ["https://athenanet.athenahealth.com/*"],
-      "css": ["patient-registration.css"],
-      "js": ["patient-registration.js"]
+      "css": ["inject/index.css"],
+      "js": ["inject/index.bundle.js"]
     }
   ]
 }
