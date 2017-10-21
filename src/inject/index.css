@@ -1,0 +1,7 @@
+.bfc-registration-row--rarely-used {
+  opacity: 0.4;
+}
+
+.bfc-registration-row--header > td {
+  border-top: 1px solid #e4e4e4;
+}

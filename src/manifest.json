@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "BFC - Athena customization",
+  "description": "Modifies appearance of pages on Athena to streamline the Berkeley Free Clinic appointment flow.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "popup/icon.png",
+    "default_popup": "popup/index.html",
+    "default_title": "BFC Athena Extension"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["https://athenanet.athenahealth.com/*"],
+      "css": ["inject/index.css"],
+      "js": ["inject/index.bundle.js"]
+    }
+  ]
+}
